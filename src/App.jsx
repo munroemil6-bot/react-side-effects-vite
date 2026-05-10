@@ -1,10 +1,12 @@
+import { useState, useEffect } from "react";
+
 function App() {
-  // Step 1: Create state variables for `joke` and `loading`
+  // Step 1: Create state variables
   const [joke, setJoke] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Step 3: Define a function that fetches a programming joke from an API
-  const fetchJoke = () => {
+  // Step 3: Function to fetch joke
+  function fetchJoke() {
     setLoading(true);
 
     fetch("https://v2.jokeapi.dev/joke/Programming?type=single")
@@ -14,12 +16,12 @@ function App() {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching joke:", error);
+        console.log(error);
         setLoading(false);
       });
-  };
+  }
 
-  // Step 2: Use `useEffect` to call a function that fetches a joke when the component mounts
+  // Step 2: Fetch joke when component loads
   useEffect(() => {
     fetchJoke();
   }, []);
@@ -28,12 +30,10 @@ function App() {
     <div className="app">
       <h1>Programming Jokes</h1>
 
-      {/* Only ONE paragraph tag */}
       <p>{loading ? "Loading..." : joke}</p>
 
-      {/* Only ONE button */}
       <button onClick={fetchJoke}>
-        Get New Joke
+        Get a New Joke
       </button>
     </div>
   );
